@@ -5,6 +5,7 @@ const path = require('path');
 
 const publicPath = path.join(__dirname, '../public');
 
+let {generateMessage} = require('./utils/message.js')
 const port = process.env.PORT || 3000
 let app = express();
 let server = http.createServer(app);
@@ -25,18 +26,19 @@ io.on('connection', (socket) => {
 	// 	console.log('create email', newEmail)
 	// });
 
-	socket.emit('newMessage', {
-		from: 'ya boii',
-		text: 'hello friend'
-	});
+	socket.emit('newMessage', generateMessage('Admin', 'Welcome'));
 
-	socket.on('createMessage', (message) => {
+	socket.broadcast.emit('newMessage' , generateMessage('Admin', 'New User'));
+
+	socket.on('createMessage', (message, callback) => {
 		console.log(`There's a new message!`, message);
-		io.emit('newMessage', {
-			from: message.from,
-			text: message.text,
-			createdAt: new Date().getTime()
-		});
+		io.emit('newMessage', generateMessage(message.from, message.text));
+		callback('This is from the server');
+		// socket.broadcast.emit('newMessage', {
+		// 	from: message.from,
+		// 	text: message.text,
+		// 	createdAt: new Date().getTime()
+		// })
 	})
 
 	socket.on('disconnect', () => {

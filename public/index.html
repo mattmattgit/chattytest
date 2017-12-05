@@ -3,10 +3,29 @@
 <head>
 	<title>Chatty</title>
 	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 	<p>Welcome</p>
-	<p id="chats"><p>
+
+	<form id="user-name-form">
+		<input type="text" name="user" placeholder="Name"/>
+
+		<button>Send</button>
+	</form>
+
+
+	<article id="messages">
+		
+	</article>
+
+	<form id="message-form">
+		<input type="text" name="message" placeholder="Text"/>
+
+		<button>Send</button>
+	</form>
+
+
 	<script src="socket.io/socket.io.js"></script>
 	<script src="/js/index.js"></script>
 </body>

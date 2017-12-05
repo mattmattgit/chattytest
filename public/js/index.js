@@ -18,12 +18,34 @@ socket.on('disconnect', function () {
 	
 // });
 
+
 socket.on('newMessage', function (message) {
 	console.log('new message', message);
 
-	var node = document.createElement("p");                 // Create a <li> node
-	var textnode = document.createTextNode(`From: ${JSON.stringify(message.from)} Message: ${message.text}`);       // Create a text node
-	node.appendChild(textnode);                              // Append the text to <li>
-	document.getElementById("chats").appendChild(node);
+	$('#messages').append(`<p>${message.from}: ${message.text}</p>`)
 });
+
+
+$('#user-name-form').on('submit', function (e) {
+	e.preventDefault();
+
+	var name = $('[name=user]').val();
+	console.log(name);
+
+	$('#message-form').on('submit', function (e) {
+		e.preventDefault();
+
+		socket.emit('createMessage', {
+			from: name,
+			text: $('[name=message]').val()
+		}, function () {
+
+		});
+	});
+
+});
+
+
+
+
 
