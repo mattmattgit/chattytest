@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
 
 	socket.emit('newMessage', {
 		from: 'ya boii',
-		text: 'sup ma niggaaa'
+		text: 'hello friend'
 	});
 
 	socket.on('createMessage', (message) => {
